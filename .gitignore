@@ -1,2 +1,5 @@
 *.mp4
 runs/
+__pycache__/
+venv/
+.venv/
