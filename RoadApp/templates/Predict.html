@@ -1,0 +1,80 @@
+{% load static %}
+<html>
+<head>
+<title>An Intelligent Graph Neural Network Model for Road Accident Injury Severity Prediction</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+<script language="javascript">
+	function validate(formObj)
+	{
+	if(formObj.t1.value.length==0)
+	{
+	alert("Please upload test dataset");
+	formObj.t1.focus();
+	return false;
+	}
+	return true;
+	}
+
+	</script>
+</head>
+<style>
+body {
+  background-image: url("{% static 'images/road.jpg' %}");
+}
+</style>
+<body>
+<div class="main">
+  <div class="main_resize">
+    <div class="header">
+      <div class="logo">
+        <h1><span>An Intelligent Graph Neural Network Model for Road Accident Injury Severity Prediction</span><small></small></h1>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content_bg">
+        <div class="menu_nav">
+           <ul>
+                        <li><a href="{% url 'UploadDataset' %}" style="color: black;">Upload Dataset</a></li>
+                        <li><a href="{% url 'LoadDataset' %}" style="color: black;">Processed</a></li>
+                        <li><a href="{% url 'BalancedData' %}" style="color: black;">Balanced Data</a></li>
+                        <li><a href="{% url 'TrainML' %}" style="color: black;">Train ML</a></li>
+                        <li><a href="{% url 'Predict' %}" style="color: black;">Prediction</a></li>
+                        <li><a href="{% url 'ImageSeverity' %}" style="color: black;">Detection</a></li>
+                        <li><a href="{% url 'VideoAccident' %}" style="color: black;">Video</a></li>
+                        <li><a href="{% url 'index' %}" style="color: black;">Logout</a></li>
+                    </ul>   
+        </div>
+        <div class="hbg"><img src="{% static 'images/road.jpg' %}" width="1010" height="400" alt="" /></div>
+      				<center>
+<form name="f1" method="post" action={% url 'PredictAction' %} enctype="multipart/form-data" onsubmit="return validate(this);">
+{% csrf_token %}<br/>
+   <h2><b>Road Injury Severity Prediction  from Test Data Screen</b></h2>
+   
+	<form method="POST">
+  {% csrf_token %}
+  <label>Age Band of Driver:</label><input type="text" name="Age_band_of_driver"><br>
+  <label>Sex of Driver:</label><input type="text" name="Sex_of_driver"><br>
+  <label>Educational Level:</label><input type="text" name="Educational_level"><br>
+  <label>Vehicle Driver Relation:</label><input type="text" name="Vehicle_driver_relation"><br>
+  <label>Driving Experience:</label><input type="text" name="Driving_experience"><br>
+  <label>Lanes or Medians:</label><input type="text" name="Lanes_or_Medians"><br>
+  <label>Types of Junction:</label><input type="text" name="Types_of_Junction"><br>
+  <label>Road Surface Type:</label><input type="text" name="Road_surface_type"><br>
+  <label>Light Conditions:</label><input type="text" name="Light_conditions"><br>
+  <label>Weather Conditions:</label><input type="text" name="Weather_conditions"><br>
+  <label>Type of Collision:</label><input type="text" name="Type_of_collision"><br>
+  <label>Vehicle Movement:</label><input type="text" name="Vehicle_movement"><br>
+  <label>Pedestrian Movement:</label><input type="text" name="Pedestrian_movement"><br>
+  <label>Cause of Accident:</label><input type="text" name="Cause_of_accident"><br><br>
+
+  <input type="submit" value="Predict">
+</form>
+
+<br>
+{{ data|safe }}
+
+       
+					
+	</body>
+</html>

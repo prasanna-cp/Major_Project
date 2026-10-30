@@ -1,0 +1,136 @@
+{% load static %}
+<html>
+<head>
+    <title>Image Severity Detection - Road Crash Prediction</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+    <style>
+        /* Inherited Global Styles */
+        body {
+            background-image: url("{% static 'images/road.jpg' %}");
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Centered Box for Detection Content */
+        .detection-container {
+            width: 800px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        /* Styled Buttons to match Navigation */
+        .btn-predict {
+            padding: 12px 25px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-predict:hover {
+            background: #000000;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* File Input Styling */
+        input[type="file"] {
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px dashed #2c3e50;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .result-img {
+            margin-top: 20px;
+            border: 5px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+
+        .recommendation-list {
+            text-align: left;
+            display: inline-block;
+            background: #fdfdfd;
+            padding: 20px;
+            border-left: 5px solid #ff0000;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="main">
+  <div class="main_resize">
+    <div class="header">
+      <div class="logo">
+        <h1><span>An Intelligent Graph Neural Network Model for Road Accident Injury Severity Prediction</span></h1>
+      </div>
+    </div>
+    
+    <div class="content">
+      <div class="content_bg">
+        <div class="menu_nav">
+             <ul>
+                        <li><a href="{% url 'UploadDataset' %}" style="color: black;">Upload Dataset</a></li>
+                        <li><a href="{% url 'LoadDataset' %}" style="color: black;">Processed</a></li>
+                        <li><a href="{% url 'BalancedData' %}" style="color: black;">Balanced Data</a></li>
+                        <li><a href="{% url 'TrainML' %}" style="color: black;">Train ML</a></li>
+                        <li><a href="{% url 'Predict' %}" style="color: black;">Prediction</a></li>
+                        <li><a href="{% url 'ImageSeverity' %}" style="color: black;">Detection</a></li>
+                        <li><a href="{% url 'VideoAccident' %}" style="color: black;">Video</a></li>
+                        <li><a href="{% url 'index' %}" style="color: black;">Logout</a></li>
+                    </ul>       
+        </div>
+
+        <div class="hbg"><img src="{% static 'images/road.jpg' %}" width="1010" height="150" alt="" /></div>
+
+        <div class="detection-container">
+            <h2 style="color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px;">
+                🖼 Image Severity Detection
+            </h2>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><strong>Select Accident Scene Image:</strong></p>
+                <input type="file" name="image" accept="image/*" required>
+                <br>
+                <button type="submit" class="btn-predict">Upload & Analyze Severity</button>
+            </form>
+
+            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ccc;">
+
+          
+
+            {% if result %}
+                <div style="margin-top:20px; padding:15px; background:#2c3e50; color:white; border-radius:5px;">
+                    <h3 style="margin:0;">Analysis Result: {{ result|safe }}</h3>
+                </div>
+            {% endif %}
+
+            {% if recommendations %}
+                <div class="recommendation-list">
+                    <h3 style="margin-top:0;">📋 Safety Recommendations:</h3>
+                    <ul>
+                        {% for r in recommendations %}
+                            <li style="margin-bottom:8px;">{{ r }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

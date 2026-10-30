@@ -1,0 +1,79 @@
+{% load static %}
+<html>
+<head>
+    <title>Road Crash Injury Severity Prediction</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            background-image: url("{% static 'images/road.jpg' %}");
+            margin: 0;
+            padding: 0;
+        }
+
+        /* This is the magic part to align buttons in one line */
+        .menu_nav ul {
+            display: flex;          /* Enables Flexbox */
+            flex-wrap: nowrap;      /* Prevents items from jumping to the next line */
+            justify-content: space-around; /* Distributes space evenly between buttons */
+            list-style-type: none;  /* Removes bullet points */
+            padding: 0;
+            margin: 10px 0;
+            background-color: rgba(255, 255, 255, 0.7); /* Optional: makes menu readable */
+            border-radius: 5px;
+        }
+
+        .menu_nav li {
+            padding: 10px 5px;
+        }
+
+        .menu_nav a {
+            text-decoration: none;
+            font-family: verdana;
+            font-weight: bold;
+            white-space: nowrap;    /* Keeps the text within a button on one line */
+        }
+    </style>
+</head>
+
+<body>
+<div class="main">
+    <div class="main_resize">
+        <div class="header">
+            <div class="logo">
+                <h1><span>An Intelligent Graph Neural Network Model for Road Accident Injury Severity Prediction</span></h1>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="content_bg">
+                <div class="menu_nav">
+                    <ul>
+                        <li><a href="{% url 'UploadDataset' %}" style="color: black;">Upload Dataset</a></li>
+                        <li><a href="{% url 'LoadDataset' %}" style="color: black;">Processed</a></li>
+                        <li><a href="{% url 'BalancedData' %}" style="color: black;">Balanced Data</a></li>
+                        <li><a href="{% url 'TrainML' %}" style="color: black;">Train ML</a></li>
+                        <li><a href="{% url 'Predict' %}" style="color: black;">Prediction</a></li>
+                        <li><a href="{% url 'ImageSeverity' %}" style="color: black;">Detection</a></li>
+                        <li><a href="{% url 'VideoAccident' %}" style="color: black;">Video</a></li>
+                        <li><a href="{% url 'index' %}" style="color: black;">Logout</a></li>
+                    </ul>
+                </div>
+
+                <div class="hbg">
+                    <img src="{% static 'images/road.jpg' %}" width="1010" height="250" alt="Road Image" />
+                </div>
+
+                <center>
+                    <font face="verdana" color="black">{{ data|safe }}</font>
+                    <br/>
+                    {% if img %}
+                    <img src="data:image/png;base64, {{ img }}" alt="Graph result" />
+                    {% endif %}
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

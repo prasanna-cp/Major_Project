@@ -1,0 +1,143 @@
+{% load static %}
+<html>
+<head>
+    <title>Accident Detection</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            background-image: url("{% static 'images/road.jpg' %}");
+            margin: 0;
+            padding: 0;
+            font-family: verdana, Arial;
+        }
+
+        /* NAVIGATION HEADER BUTTONS - BLACK TEXT */
+        .menu_nav ul {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 5px;
+        }
+
+        .menu_nav li {
+            padding: 10px 5px;
+        }
+
+        .menu_nav a {
+            text-decoration: none;
+            font-family: verdana;
+            font-weight: bold;
+            white-space: nowrap;
+            color: #000000 !important; /* Force Black Color */
+        }
+
+        .menu_nav a:hover {
+            color: #555555 !important;
+        }
+
+        /* CONTENT LAYOUT */
+        .card {
+            width: 750px; /* Slightly wider to accommodate video */
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+
+        h2, h3, p {
+            color: #000000; /* All text in black */
+        }
+
+        /* BLACK SUBMIT BUTTON */
+        .btn-submit {
+            padding: 12px 30px;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #333333;
+        }
+
+        video {
+            border: 3px solid #000000;
+            border-radius: 8px;
+            margin-top: 15px;
+            background: #000;
+        }
+    </style>
+</head>
+
+<body>
+<div class="main">
+    <div class="main_resize">
+        <div class="header">
+            <div class="logo">
+                <h1 style="color: black;"><span>Road Crash Injury Severity Prediction</span></h1>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="content_bg">
+                <div class="menu_nav">
+                    <ul>
+                        <li><a href="{% url 'UploadDataset' %}">Upload Dataset</a></li>
+                        <li><a href="{% url 'LoadDataset' %}">Processed</a></li>
+                        <li><a href="{% url 'BalancedData' %}">Balanced Data</a></li>
+                        <li><a href="{% url 'TrainML' %}">Train ML</a></li>
+                        <li><a href="{% url 'Predict' %}">Prediction</a></li>
+                        <li><a href="{% url 'ImageSeverity' %}">Detection</a></li>
+                        <li><a href="{% url 'VideoAccident' %}">Video</a></li>
+                        <li><a href="{% url 'index' %}">Logout</a></li>
+                    </ul>
+                </div>
+
+                <div class="hbg">
+                    <img src="{% static 'images/road.jpg' %}" width="1010" height="120" alt="Banner" style="object-fit: cover;"/>
+                </div>
+
+                <div class="card">
+                    <h2>🎥 Video Accident Detection</h2>
+                    
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" name="video" accept="video/mp4" required style="color:black;">
+                        <br><br>
+                        <button type="submit" class="btn-submit">Upload & Detect</button>
+                    </form>
+
+                    <hr style="border: 0.5px solid #ccc; margin: 20px 0;">
+
+                    {% if result %}
+                        <h3 style="color: #d9534f;">Result: {{ result }}</h3>
+                    {% endif %}
+
+                    {% if output_video %}
+                        <h3>Processed Analysis Video:</h3>
+                        <video width="680" controls>
+                            <source src="{{ output_video }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endif %}
+                </div>
+                
+                <div style="padding-bottom: 50px;"></div> 
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
